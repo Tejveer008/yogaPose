@@ -3,138 +3,185 @@ let pose;
 let skeleton;
 let pose_names = ["MOUNTAIN", "GODDESS", "GARLAND", "PLANK"];
 let pose_images = {
-    "MOUNTAIN": "image1.png",
-    "GODDESS": "image2.jpeg",
-    "GARLAND": "image3.jpg",
-    "PLANK": "image4.jpg"
+  MOUNTAIN: "image1.png",
+  GODDESS: "image2.jpeg",
+  GARLAND: "image3.jpg",
+  PLANK: "image4.jpg",
 };
+// let pose_names = ["START"];
 let posesDropdown;
-let selected_pose = "none";
-let poseLabel = "";
+let selected_pose;
+let poseLabel;
 let poseNet;
 let knn;
 
-let count = { correct: 0, total: 0 }; // Counter for accuracy calculation
+let count = { correct: 0, total: 0 }; // [incorrect, got result called]
 const DATA_PATH = "./data.json";
 
+// let knee, hip, ankle, kneeFlexion, dorsiflexion, hipFlexion, shoulder, anKnee, sHip, trunkLean;
+
+// Loading the data before
+
 function setup() {
-    let cv = createCanvas(320, 240); // Reduced canvas size for better performance
-    cv.parent("imager");
-    video = createCapture(VIDEO);
-    video.size(320, 240);
-    video.hide();
+  let cv = createCanvas(640, 500);
+  cv.parent("imager");
+  video = createCapture(VIDEO);
+  video.size(640, 480);
+  video.hide();
 
-    // Dropdown setup
-    posesDropdown = document.getElementById("poses_dropdown");
+  // create options of poses in dropdown
+  posesDropdown = document.getElementById("poses_dropdown");
 
-    // Initialize PoseNet model
-    poseNet = ml5.poseNet(video, modelLoaded);
-    poseNet.on("pose", getPoses);
+  // pose_names.forEach((name) => {
 
-    // Initialize KNN Classifier
-    knn = ml5.KNNClassifier();
+  //   posesDropdown.options[posesDropdown.options.length] = new Option(
+  //     name,
+  //     name
+  //   );
+  // });
+  // setup posenet model
+  // posenet requires input image/video and a callback function
+  poseNet = ml5.poseNet(video, modelLoaded);
+
+  // on() function is called on seeing a pose.
+  // the object of bodypoints is given to callback function getPoses
+  poseNet.on("pose", getPoses);
+  // getPoses initializes pose and skeleton variables
+
+  knn = ml5.KNNClassifier();
+
+  // load the saved model
 }
 
 function image_maker() {
-    let posesDropdownVal = posesDropdown.value;
-    if (pose_images[posesDropdownVal]) {
-        document.getElementById("pose_img").src = pose_images[posesDropdownVal];
-    } else {
-        document.getElementById("pose_img").src = ""; // Clear image if invalid selection
-    }
-}
-
-function modelLoaded() {
-    console.log("PoseNet model loaded!");
-    knn.load(DATA_PATH, networkLoaded);
+  let posesDropdownVal = document.getElementById("poses_dropdown").value;
+  // console.log(typeof(posesDropdownVal))
+  img_path = pose_images[posesDropdownVal];
+  // console.log(pose_val)
+  document.getElementById("pose_img").src = img_path;
 }
 
 function networkLoaded() {
-    console.log("KNN loaded!");
-    classifyPose();
+  console.log("KNN loaded!");
+  classifyPose();
+}
+
+// call back function
+function modelLoaded() {
+  console.log("PoseNet model loaded!");
+  knn.load(DATA_PATH, networkLoaded);
 }
 
 function classifyPose() {
-    if (pose) {
-        const poseArray = pose.keypoints.map((p) => [p.score, p.position.x, p.position.y]);
-        knn.classify(poseArray, gotResult);
-    } else {
-        setTimeout(classifyPose, 500); // Retry if no pose detected, reduced interval for responsiveness
-    }
+  // classify pose
+  if (pose) {
+    const poseArray = pose.keypoints.map((p) => [
+      p.score,
+      p.position.x,
+      p.position.y,
+    ]);
+    setInterval(() => {
+      knn.classify(poseArray, gotResult);
+    }, 3000);
+  } else {
+    setTimeout(classifyPose, 1000);
+  }
 }
 
 function gotResult(error, results) {
-    if (error) {
-        console.error(error);
-        return;
-    }
-    if (results) {
-        count.total++;
-        poseLabel = pose_names[parseInt(results.label)];
+  if (results) {
+    // console.log(results);
 
-        if (posesDropdown.value === poseLabel) {
-            count.correct++;
-        }
-        classifyPose(); // Continue classification
+    count.total++;
+
+    poseLabel = pose_names[parseInt(results.label)];
+
+    if (posesDropdown.value == poseLabel) {
+      count.correct++;
     }
+    classifyPose();
+  }
 }
 
 function getPoses(poses) {
-    if (poses.length > 0) {
-        pose = poses[0].pose;
-        skeleton = poses[0].skeleton;
-    }
+  if (poses.length > 0) {
+    pose = poses[0].pose;
+    skeleton = poses[0].skeleton;
+  }
 }
 
 function drawKeypoints() {
-    if (pose) {
-        for (let keypoint of pose.keypoints) {
-            if (keypoint.score > 0.2) {
-                fill(255, 0, 0);
-                noStroke();
-                ellipse(keypoint.position.x, keypoint.position.y, 5, 5); // Reduced size for better performance
-            }
-        }
+  if (pose) {
+    for (let j = 0; j < pose.keypoints.length; j++) {
+      // A keypoint is an object describing a body part (like rightArm or leftShoulder)
+      let keypoint = pose.keypoints[j];
+      // Only draw an ellipse is the pose probability is bigger than 0.2
+      if (keypoint.score > 0.2) {
+        fill(255, 0, 0);
+        noStroke();
+        ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
+      }
     }
+  }
 }
 
+// A function to draw the skeletons
 function drawSkeleton() {
-    if (pose) {
-        for (let [partA, partB] of skeleton) {
-            stroke(255, 0, 0);
-            line(
-                partA.position.x,
-                partA.position.y,
-                partB.position.x,
-                partB.position.y
-            );
-        }
+  // Loop through all the skeletons detected
+  // let skeleton = poses[i].skeleton;
+  // For every skeleton, loop through all body connections
+  if (pose) {
+    for (let j = 0; j < skeleton.length; j++) {
+      let partA = skeleton[j][0];
+      let partB = skeleton[j][1];
+      stroke(255, 0, 0);
+      line(
+        partA.position.x,
+        partA.position.y,
+        partB.position.x,
+        partB.position.y
+      );
     }
+  }
 }
 
 function draw() {
-    if (selected_pose !== "none") {
-        image(video, 0, 0, width, height);
+  if (selected_pose != "none") {
+    image(video, 0, 0, width, height);
 
-        drawKeypoints();
-        drawSkeleton();
+    // We can call both functions to draw all keypoints and the skeletons
+    drawKeypoints();
+    drawSkeleton();
 
-        fill(0, 255, 0);
-        textSize(20); // Reduced text size for better visibility on smaller screens
-
-        if (posesDropdown.value !== poseLabel) {
-            text("INCORRECT POSE", width / 4, height - 10);
-        } else {
-            text(`${poseLabel} POSE`, width / 4, height - 10);
-        }
+    fill(0, 255, 0);
+    textSize(30);
+    //text(classificationResult, width/2, height/2);
+    if (posesDropdown.value != poseLabel) {
+      text("INCORRECT POSE", width / 4, height - 10);
+    } else {
+      if (poseLabel == "MOUNTAIN") {
+        text("MOUNTAIN POSE", width / 4, height - 10);
+      } else if (poseLabel == "GODDESS") {
+        text("GODDESS POSE", width / 4, height - 10);
+      } else if (poseLabel == "GARLAND") {
+        text("GARLAND POSE", width / 4, height - 10);
+      } else if (poseLabel == "PLANK") {
+        text("PLANK POSE", width / 4, height - 10);
+      }
     }
-    selected_pose = posesDropdown.value;
+    // else if (poseLabel == "COBRA") {
+    //   text("COBRA", width/2, height/2);
+
+    // }
+  }
+  selected_pose = posesDropdown.value;
 }
 
 function end() {
-    console.log(count);
-    console.log("Accuracy: ", ((count.correct / count.total) * 100).toFixed(2), "%");
-    count = { correct: 0, total: 0 };
-    video.stop();
-    video.remove();
+  // document.location.href = "http://localhost:5501";
+  console.log(count);
+  console.log("Accuracy: ", count.correct / count.total) * 100;
+  count = { correct: 0, total: 0 };
+  video.stop();
+  video.remove();
 }
