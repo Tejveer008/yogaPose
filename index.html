@@ -1,195 +1,196 @@
 <html>
 <meta charset="UTF-8" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
-<title>PranaShakti Yoga/title>
+<title>Yoga Pose Classificatio & Correction</title>
 
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-  <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&family=Roboto:wght@100;400&display=swap" rel="stylesheet"> -->
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&family=Roboto:wght@100;400&display=swap" rel="stylesheet"> -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
-  <link rel="stylesheet" href="./style/font-awesome.min.css">
-  <link rel="stylesheet" href="./style/css2.css">
+<link rel="stylesheet" href="./style/font-awesome.min.css">
+<link rel="stylesheet" href="./style/css2.css">
 
 
-  <link rel="shortcut icon" href="./yoga_logo.png" type="image/x-icon">
+<link rel="shortcut icon" href="./yoga_logo.png" type="image/x-icon">
 
-  <style>
-    /* General Styles */
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #fae6e6 0%, #cafaf9 60%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
+<style>
+  /* General Styles */
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(-45deg, #fae6e6 0%, #cafaf9 60%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
 
-    .logo {
-      margin: 1em 0;
-      height: 100px;
-    }
+  .logo {
+    margin: 1em 0;
+    height: 100px;
+    ;
+  }
 
+  h1 {
+    margin: 0.5em;
+    font-size: 2em;
+    text-align: center;
+  }
+
+  h3 {
+    margin-bottom: 0.5em;
+  }
+
+  .cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: url("yoga_cover.png") no-repeat center 30%;
+    background-size: contain;
+    opacity: 0.5;
+    z-index: -1;
+  }
+
+  .main {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1em;
+    align-items: center;
+  }
+
+  button {
+    font-size: 1.2em;
+    padding: 15px 20px;
+    margin: 10px;
+    margin-top: 5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all 0.3s ease;
+  }
+
+  button a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+
+  button:hover {
+    color: black;
+    background-color: #c2daf9;
+    transform: translateY(-3px);
+  }
+
+  .footer {
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    bottom: 0;
+  }
+
+  .footer * {
+    margin: 0.2em;
+  }
+
+  /* Scrollbar Customization */
+  ::-webkit-scrollbar {
+    width: 7.5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(126, 199, 241, 1);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #278489;
+  }
+
+  /* Media Queries for Responsiveness */
+  @media (max-width: 1024px) {
     h1 {
-      margin: 0.5em;
-      font-size: 2em;
-      text-align: center;
-    }
-
-    h3 {
-      margin-bottom: 0.5em;
-    }
-
-    .cover {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-      background: url("yoga_cover.png") no-repeat center 30%;
-      background-size: contain;
-      opacity: 0.5;
-      z-index: -1;
-    }
-
-    .main {
-      width: 90%;
-      max-width: 1200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 1em;
-      align-items: center;
+      font-size: 1.8em;
     }
 
     button {
-      font-size: 1.2em;
-      padding: 15px 20px;
-      margin: 10px;
-      margin-top: 5rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      transition: all 0.3s ease;
-    }
-
-    button a {
-      text-decoration: none;
-      color: inherit;
-      font-weight: bold;
-    }
-
-    button:hover {
-      color: black;
-      background-color: #c2daf9;
-      transform: translateY(-3px);
+      font-size: 1em;
+      padding: 12px 15px;
     }
 
     .footer {
-      padding: 10px 0;
-      text-align: center;
+      font-size: 0.9em;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .cover {
+      background-size: 70%;
+      background-position: center 45%;
+    }
+
+    h1 {
+      font-size: 1.4em;
+    }
+
+    .main {
       width: 100%;
-      font-size: 1em;
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-      position: fixed;
-      bottom: 0;
     }
 
-    .footer * {
-      margin: 0.2em;
+    button {
+      margin: 5px;
+      margin-top: 5rem;
+      padding: 10px;
     }
+  }
+</style>
 
-    /* Scrollbar Customization */
-    ::-webkit-scrollbar {
-      width: 7.5px;
-    }
+<body>
+  <div class="cover"></div>
+  <header align="center">
+    <img class="logo" src="./yoga_logo.png" alt="logo_yoga" height="60">
+    <h1>&nbsp;&nbsp; <u>PranaShakti Yoga</u> </h1>
+  </header>
 
-    ::-webkit-scrollbar-track {
-      box-shadow: inset 0 0 5px grey;
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: rgba(126, 199, 241, 1);
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #278489;
-    }
-
-    /* Media Queries for Responsiveness */
-    @media (max-width: 1024px) {
-      h1 {
-        font-size: 1.8em;
-      }
-
-      button {
-        font-size: 1em;
-        padding: 12px 15px;
-      }
-
-      .footer {
-        font-size: 0.9em;
-      }
-    }
-
-    @media (max-width: 650px) {
-      .cover {
-        background-size: 70%;
-        background-position: center 45%;
-      }
-
-      h1 {
-        font-size: 1.4em;
-      }
-
-      .main {
-        width: 100%;
-      }
-
-      button {
-        margin: 5px;
-        margin-top: 5rem;
-        padding: 10px;
-      }
-    }
-  </style>
-
-  <body>
-    <div class="cover"></div>
-    <header align="center">
-      <img class="logo" src="./yoga_logo.png" alt="logo_yoga" height="60">
-      <h1>&nbsp;&nbsp; <u>PranaShakti Yoga</u> </h1>
-    </header>
-
-    <div class="main">
+  <div class="main">
 
 
-      <div class="buttons">
-        <button class="classify"> <a href="./classify.html">Practice Yoga</a> <i style="font-size: 0.75em"
-            class="fa fa-external-link" aria-hidden="true"></i></button>
-        <button class="correct"><a href="./correct.html">Yoga Pose Correction</a> <i style="font-size: 0.75em"
-            class="fa fa-external-link" aria-hidden="true"></i></button>
-      </div>
-
+    <div class="buttons">
+      <button class="classify"> <a target="_blank" href="./classify.html">KNN Classifier Module</a> <i
+          style="font-size: 0.75em" class="fa fa-external-link" aria-hidden="true"></i></button>
+      <button class="correct"><a target="_blank" href="./correct.html">Yoga Pose Correction Module</a> <i
+          style="font-size: 0.75em" class="fa fa-external-link" aria-hidden="true"></i></button>
     </div>
 
-    <div class="footer">
-  </body>
+  </div>
+
+  <div class="footer">
+</body>
 
 </html>
