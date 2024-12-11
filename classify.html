@@ -9,14 +9,17 @@
 <style>
   body {
     font-family: 'Poppins', sans-serif;
-    background-color: #FDF3E8;
+    background-image: linear-gradient(-45deg, #fae6e6 0%, #cafaf9 60%);
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   .top-section {
-    width: 80%;
+    width: 90%;
     /* Adjusted for better responsiveness */
     max-width: 600px;
     /* To ensure it doesn't get too wide */
@@ -34,60 +37,100 @@
   }
 
   .pose_selection select {
-    font-size: 1em;
+    font-size: 1.2em;
     /* Increased font size */
-    padding: 0.75em 1em;
-    /* Added padding for a larger clickable area */
+    padding: 1em 1.5em;
+    /* Larger padding */
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
-    /* Added border for better visibility */
     width: 100%;
-    /* Make it responsive */
+    /* Responsive width */
     max-width: 400px;
     /* Cap maximum size */
     box-sizing: border-box;
-    /* Include padding in width */
   }
 
-  .pose_dropdown * {
-    outline: none;
-    background-color: transparent;
+  button {
+    font-size: 1.2em;
+    /* Increased font size */
+    padding: 1em 2em;
+    /* Larger clickable area */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1em;
+    width: 100%;
+    /* Full width on smaller screens */
+    max-width: 200px;
+    /* Cap maximum size */
+  }
+
+  button:hover {
+    background-color: #0056b3;
   }
 
   #imager {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    /* Ensures images wrap in smaller screens */
+    /* Ensures images wrap on smaller screens */
     justify-content: center;
     /* Center images */
+    align-items: center;
     gap: 20px;
     /* Space between images */
+    width: 100%;
   }
 
   img {
-    max-width: 100%;
-    /* Ensure images scale down */
+    width: 100%;
+    /* Responsive width */
+    max-width: 250px;
+    /* Uniform max width */
     height: auto;
     /* Maintain aspect ratio */
+    object-fit: cover;
+    /* Ensure image fills the container */
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    /* Optional: rounded corners */
   }
 
-  button {
-    padding: 0.75em 1.5em;
-    font-size: 1em;
-    background-color: #5C350A;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 1em;
+  @media (max-width: 768px) {
+    .pose_selection {
+      font-size: 1.2em;
+    }
+
+    .pose_selection select {
+      font-size: 1em;
+    }
+
+    button {
+      font-size: 1em;
+      padding: 0.8em 1.5em;
+    }
   }
 
-  button:hover {
-    background-color: #0056b3;
+  @media (max-width: 480px) {
+    .pose_selection {
+      font-size: 1em;
+    }
+
+    .pose_selection select {
+      font-size: 0.9em;
+      padding: 0.7em 1em;
+    }
+
+    button {
+      font-size: 0.9em;
+      padding: 0.6em 1.2em;
+    }
   }
 </style>
+
 
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
