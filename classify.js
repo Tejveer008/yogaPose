@@ -2,12 +2,7 @@ let video;
 let pose;
 let skeleton;
 let pose_names = ["MOUNTAIN", "GODDESS", "GARLAND", "PLANK"];
-let pose_images = {
-  MOUNTAIN: "image1.png",
-  GODDESS: "image2.jpeg",
-  GARLAND: "image3.jpg",
-  PLANK: "image4.jpg",
-};
+let pose_images = {"MOUNTAIN" :"image1.png", "GODDESS": "image2.jpeg", "GARLAND": "image3.jpg", "PLANK": "image4.jpg"};
 // let pose_names = ["START"];
 let posesDropdown;
 let selected_pose;
@@ -15,7 +10,7 @@ let poseLabel;
 let poseNet;
 let knn;
 
-let count = { correct: 0, total: 0 }; // [incorrect, got result called]
+let count = {correct: 0, total: 0}; // [incorrect, got result called]
 const DATA_PATH = "./data.json";
 
 // let knee, hip, ankle, kneeFlexion, dorsiflexion, hipFlexion, shoulder, anKnee, sHip, trunkLean;
@@ -23,7 +18,7 @@ const DATA_PATH = "./data.json";
 // Loading the data before
 
 function setup() {
-  let cv = createCanvas(640, 500);
+  let cv = createCanvas(640, 500); 
   cv.parent("imager");
   video = createCapture(VIDEO);
   video.size(640, 480);
@@ -32,8 +27,8 @@ function setup() {
   // create options of poses in dropdown
   posesDropdown = document.getElementById("poses_dropdown");
 
-  // pose_names.forEach((name) => {
-
+  // pose_names.forEach((name) => { 
+    
   //   posesDropdown.options[posesDropdown.options.length] = new Option(
   //     name,
   //     name
@@ -53,12 +48,12 @@ function setup() {
   // load the saved model
 }
 
-function image_maker() {
+function image_maker(){
   let posesDropdownVal = document.getElementById("poses_dropdown").value;
   // console.log(typeof(posesDropdownVal))
   img_path = pose_images[posesDropdownVal];
   // console.log(pose_val)
-  document.getElementById("pose_img").src = img_path;
+  document.getElementById("pose_img").src=img_path;
 }
 
 function networkLoaded() {
@@ -73,6 +68,7 @@ function modelLoaded() {
 }
 
 function classifyPose() {
+
   // classify pose
   if (pose) {
     const poseArray = pose.keypoints.map((p) => [
@@ -83,12 +79,14 @@ function classifyPose() {
     setInterval(() => {
       knn.classify(poseArray, gotResult);
     }, 3000);
+
   } else {
     setTimeout(classifyPose, 1000);
   }
 }
 
 function gotResult(error, results) {
+  
   if (results) {
     // console.log(results);
 
@@ -96,7 +94,7 @@ function gotResult(error, results) {
 
     poseLabel = pose_names[parseInt(results.label)];
 
-    if (posesDropdown.value == poseLabel) {
+    if (posesDropdown.value == poseLabel){
       count.correct++;
     }
     classifyPose();
@@ -109,6 +107,7 @@ function getPoses(poses) {
     skeleton = poses[0].skeleton;
   }
 }
+
 
 function drawKeypoints() {
   if (pose) {
@@ -156,9 +155,11 @@ function draw() {
     fill(0, 255, 0);
     textSize(30);
     //text(classificationResult, width/2, height/2);
-    if (posesDropdown.value != poseLabel) {
+    if (posesDropdown.value != poseLabel) 
+    {
       text("INCORRECT POSE", width / 4, height - 10);
-    } else {
+    } else{
+
       if (poseLabel == "MOUNTAIN") {
         text("MOUNTAIN POSE", width / 4, height - 10);
       } else if (poseLabel == "GODDESS") {
@@ -180,7 +181,7 @@ function draw() {
 function end() {
   // document.location.href = "http://localhost:5501";
   console.log(count);
-  console.log("Accuracy: ", count.correct / count.total) * 100;
+  console.log("Accuracy: ",count.correct/count.total)*100;
   count = { correct: 0, total: 0 };
   video.stop();
   video.remove();
