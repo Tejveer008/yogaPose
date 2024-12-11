@@ -1,90 +1,131 @@
 <html>
-  <meta charset="UTF-8" />
-  <title>Classification Module</title>
-  <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<meta charset="UTF-8" />
+<title>Classification Module</title>
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&family=Roboto:wght@100;400&display=swap" rel="stylesheet"> -->
-  <link rel="stylesheet" href="./style/css2.css">
+<link rel="stylesheet" href="./style/css2.css">
 
-  <style>
-    body{
-      font-family: 'Poppins', sans-serif;
-      background-image: linear-gradient(-45deg, #fae6e6 0%, #cafaf9 60%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .top-section{
-      width: 60%;
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 2em;
-    }
-    .pose_selection{
-      font-size: 1.5em;
-      padding: 0 0.5em;
-    }
-    .pose_selection select{
-      /* border-bottom: 1px solid red; */
-      font-size: 0.75em;
-      padding: 0.5em 1em;
-      border-radius: 5px;
-      background-color: rgba(0,0,0,0.1);
-    }
-    .pose_dropdown *{
-      outline: 0px;
-      background-color: transparent;
-    }
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-image: linear-gradient(-45deg, #fae6e6 0%, #cafaf9 60%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    #imager {
-      display:flex;
-      flex-direction: row;
+  .top-section {
+    width: 80%;
+    /* Adjusted for better responsiveness */
+    max-width: 600px;
+    /* To ensure it doesn't get too wide */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+  }
 
-      /* width: 200px;  */
-      /* margin: auto; */
-      /* padding: 10px; */
-      /* height:  */
-    }
-    img {
-      padding-right: 20px;
-      /* width: ; */
-    }
-  </style>
+  .pose_selection {
+    font-size: 1.5em;
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+  .pose_selection select {
+    font-size: 1em;
+    /* Increased font size */
+    padding: 0.75em 1em;
+    /* Added padding for a larger clickable area */
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    /* Added border for better visibility */
+    width: 100%;
+    /* Make it responsive */
+    max-width: 400px;
+    /* Cap maximum size */
+    box-sizing: border-box;
+    /* Include padding in width */
+  }
+
+  .pose_dropdown * {
+    outline: none;
+    background-color: transparent;
+  }
+
+  #imager {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* Ensures images wrap in smaller screens */
+    justify-content: center;
+    /* Center images */
+    gap: 20px;
+    /* Space between images */
+  }
+
+  img {
+    max-width: 100%;
+    /* Ensure images scale down */
+    height: auto;
+    /* Maintain aspect ratio */
+  }
+
+  button {
+    padding: 0.75em 1.5em;
+    font-size: 1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1em;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+</style>
+
+
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/addons/p5.dom.min.js"></script>
   <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script> -->
 
-  <script src="./script/p5.min.js"></script>
-  <script src="./script/p5.dom.min.js"></script>
-  <script src="./script/ml5.min.js"></script>
+<script src="./script/p5.min.js"></script>
+<script src="./script/p5.dom.min.js"></script>
+<script src="./script/ml5.min.js"></script>
 
 
-  <!-- <script src="collectData.js"></script> -->
-  <!-- <script src="trainNN.js"></script> -->
-  <script src="classify.js"></script>
-  <body>
-    <h1 align="center">Yoga Pose KNN Classifier</h1>
-    
-    <div class="top-section">
-      <div class="pose_selection">
-        <label for="poses_dropdown"></label>
-        <select name="poses_dropdown" id="poses_dropdown" onchange="image_maker()">
-          <option value="none" selected="selected">--Select--</option>
-          <option value="MOUNTAIN">MOUNTAIN</option>
-          <option value="GARLAND">GARLAND</option>
-          <option value="PLANK">PLANK</option>
-          <option value="GODDESS">GODDESS</option>
-          <!-- <option value="start" selected="selected">start</option> -->
+<!-- <script src="collectData.js"></script> -->
+<!-- <script src="trainNN.js"></script> -->
+<script src="classify.js"></script>
 
-        </select>
-        pose
-      </div>
+<body>
+  <h1 align="center">Yoga Pose KNN Classifier</h1>
 
+  <div class="top-section">
+    <div class="pose_selection">
+      <label for="poses_dropdown"></label>
+      <select name="poses_dropdown" id="poses_dropdown" onchange="image_maker()">
+        <option value="none" selected="selected">--Select--</option>
+        <option value="MOUNTAIN">MOUNTAIN</option>
+        <option value="GARLAND">GARLAND</option>
+        <option value="PLANK">PLANK</option>
+        <option value="GODDESS">GODDESS</option>
+        <!-- <option value="start" selected="selected">start</option> -->
+
+      </select>
+      pose
     </div>
-    <button onclick="end()">end</button>
-    <div id="imager">
-      <img id="pose_img" src=""/>
-    </div>
-  </body>
+
+  </div>
+  <button onclick="end()">end</button>
+  <div id="imager">
+    <img id="pose_img" src="" />
+  </div>
+</body>
+
 </html>
