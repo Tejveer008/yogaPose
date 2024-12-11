@@ -12,89 +12,163 @@
 
 
 <link rel="shortcut icon" href="./yoga_logo.png" type="image/x-icon">
+
 <style>
+  /* General Styles */
   body {
     font-family: 'Poppins', sans-serif;
-    background-image: linear-gradient(-45deg, #fae6e6 0%, #cafaf9 60%);
+    background: linear-gradient(-45deg, #fae6e6 0%, #cafaf9 60%);
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
   }
 
-  .top-section {
-    width: 80%;
-    /* Adjusted for better responsiveness */
-    max-width: 600px;
-    /* To ensure it doesn't get too wide */
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 2em;
+  .logo {
+    margin: 1em 0;
+    height: 100px;
   }
 
-  .pose_selection {
-    font-size: 1.5em;
-    padding: 0.5em;
+  h1 {
+    margin: 0.5em;
+    font-size: 2em;
+    text-align: center;
+  }
+
+  h3 {
+    margin-bottom: 0.5em;
+  }
+
+  .cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background: url("yoga_cover.png") no-repeat center 30%;
+    background-size: contain;
+    opacity: 0.5;
+    z-index: -1;
+  }
+
+  .main {
+    width: 90%;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
   }
 
-  .pose_selection select {
-    font-size: 1em;
-    /* Increased font size */
-    padding: 0.75em 1em;
-    /* Added padding for a larger clickable area */
-    border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid #ccc;
-    /* Added border for better visibility */
-    width: 100%;
-    /* Make it responsive */
-    max-width: 400px;
-    /* Cap maximum size */
-    box-sizing: border-box;
-    /* Include padding in width */
-  }
-
-  .pose_dropdown * {
-    outline: none;
-    background-color: transparent;
-  }
-
-  #imager {
+  .buttons {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    /* Ensures images wrap in smaller screens */
     justify-content: center;
-    /* Center images */
-    gap: 20px;
-    /* Space between images */
-  }
-
-  img {
-    max-width: 100%;
-    /* Ensure images scale down */
-    height: auto;
-    /* Maintain aspect ratio */
+    flex-wrap: wrap;
+    margin-top: 1em;
+    align-items: center;
   }
 
   button {
-    padding: 0.75em 1.5em;
-    font-size: 1em;
-    background-color: #007bff;
-    color: white;
+    font-size: 1.2em;
+    padding: 15px 20px;
+    margin: 10px;
+    margin-top: 5rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
-    margin-top: 1em;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all 0.3s ease;
+  }
+
+  button a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
   }
 
   button:hover {
-    background-color: #0056b3;
+    color: black;
+    background-color: #c2daf9;
+    transform: translateY(-3px);
+  }
+
+  .footer {
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    bottom: 0;
+  }
+
+  .footer * {
+    margin: 0.2em;
+  }
+
+  /* Scrollbar Customization */
+  ::-webkit-scrollbar {
+    width: 7.5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(126, 199, 241, 1);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #278489;
+  }
+
+  /* Media Queries for Responsiveness */
+  @media (max-width: 1024px) {
+    h1 {
+      font-size: 1.8em;
+    }
+
+    button {
+      font-size: 1em;
+      padding: 12px 15px;
+    }
+
+    .footer {
+      font-size: 0.9em;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .cover {
+      background-size: 70%;
+      background-position: center 45%;
+    }
+
+    h1 {
+      font-size: 1.4em;
+    }
+
+    .main {
+      width: 100%;
+    }
+
+    button {
+      margin: 5px;
+      margin-top: 5rem;
+      padding: 10px;
+    }
   }
 </style>
-
 
 <body>
   <div class="cover"></div>
@@ -107,10 +181,10 @@
 
 
     <div class="buttons">
-      <button class="classify"> <a href="./classify.html">Practice Yoga</a> <i style="font-size: 0.75em"
+      <button class="classify"> <a  href="./classify.html">Practice Yoga</a> <i style="font-size: 0.75em"
           class="fa fa-external-link" aria-hidden="true"></i></button>
-      <button class="correct"><a href="./correct.html">Yoga Pose Correction</a> <i style="font-size: 0.75em"
-          class="fa fa-external-link" aria-hidden="true"></i></button>
+      <button class="correct"><a  href="./correct.html">Yoga Pose Correction</a> <i
+          style="font-size: 0.75em" class="fa fa-external-link" aria-hidden="true"></i></button>
     </div>
 
   </div>
