@@ -1,6 +1,6 @@
 <html>
 <meta charset="UTF-8" />
-<title>Cprrection Module</title>
+<title>yoag Pose Correction</title>
 <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400&family=Roboto:wght@100;400&display=swap" rel="stylesheet"> -->
@@ -13,43 +13,78 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0;
+    padding: 0;
   }
 
   .top-section {
-    width: 60%;
+    width: 90%;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
+    margin: 1em 0;
   }
 
   .pose_selection {
-    font-size: 1.5em;
-    padding: 0 0.5em;
+    font-size: 1.8em;
+    padding: 0.5em;
+    text-align: center;
   }
 
   .pose_selection select {
-    /* border-bottom: 1px solid red; */
-    font-size: 0.75em;
-    padding: 0.5em 1em;
+    font-size: 1em;
+    padding: 0.7em 1.2em;
     border-radius: 5px;
     background-color: rgba(0, 0, 0, 0.1);
+    width: 100%;
   }
 
   .pose_dropdown * {
-    outline: 0px;
+    outline: none;
     background-color: transparent;
   }
 
   .message {
-    /* display: block;
-      width: 75%; */
-    font-size: 1.75em;
+    font-size: 1.8em;
     border-radius: 10px;
-    padding: 10px;
+    padding: 15px;
+    text-align: center;
+    margin-top: 1em;
+    word-wrap: break-word;
   }
 
   #message {
     font-weight: bolder;
     color: rgb(2, 165, 165);
+  }
+
+  @media (min-width: 768px) {
+    .top-section {
+      width: 60%;
+    }
+
+    .pose_selection {
+      font-size: 2em;
+    }
+
+    .message {
+      font-size: 2em;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .pose_selection {
+      font-size: 1.5em;
+    }
+
+    .pose_selection select {
+      font-size: 0.9em;
+      padding: 0.5em 1em;
+    }
+
+    .message {
+      font-size: 1.5em;
+    }
   }
 </style>
 
